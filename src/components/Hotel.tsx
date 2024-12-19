@@ -3,11 +3,10 @@ import React, {useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 
-async function loadHotel(id: string, callback: (h: Hotel) => {}){
+async function loadHotel(id: string, callback: (h: Hotel) => void){
   try{
     const res = await fetch(`http://localhost:5248/hotels/${id}`)
-    const json = await res.json()
-    const hotel: Hotel = json.hotel
+    const hotel: Hotel = await res.json()
     callback(hotel)
   }catch(e){
     console.log(e)
@@ -22,9 +21,12 @@ export const Hotel: React.FC = () => {
   const { id } = useParams<Params>()
   console.log(id)
   const [hotel, setHotel] = useState()
-
+  console.log(hotel)
   useEffect(()=>{
-    loadHotel(id, (h) => setHotel(h))
+    loadHotel(id, (h) => {
+      console.log(h)
+      setHotel(h)
+    })
   },[])
 
   return hotel && (
