@@ -1,24 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { HotelCard } from './components/HotelCard'
 import logo from './logo.svg';
 import './App.css';
 
+async function loadHotels(callback: any){
+  try{
+    const res = await fetch('http://localhost:5248/hotels')
+    const json = await res.json()
+    callback(json)
+  }catch(e){
+    console.log(e)
+  }
+}
+
 function App() {
+  const [hotels, setHotels] = useState([])
+  
+  useEffect(()=>{
+    loadHotels((r:any) => setHotels(r))
+  },[])
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {hotels && (
+      <ul>
+        {hotels.map(h => <li><HotelCard hotel={h}/></li>)}
+      </ul>
+      )}
     </div>
   );
 }
