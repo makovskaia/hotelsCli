@@ -1,33 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { HotelCard } from './components/HotelCard'
+// @ts-nocheck
+import React from 'react';
+import { HotelsList } from './components/HotelsList'
+import { Hotel } from './components/Hotel'
 import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-async function loadHotels(callback: any){
-  try{
-    const res = await fetch('http://localhost:5248/hotels')
-    const json = await res.json()
-    callback(json)
-  }catch(e){
-    console.log(e)
-  }
-}
 
-function App() {
-  const [hotels, setHotels] = useState([])
+
+
+const App: React.FC = () => {
   
-  useEffect(()=>{
-    loadHotels((r:any) => setHotels(r))
-  },[])
-  
-  return (
-    <div className="App">
-      {hotels && (
-      <ul>
-        {hotels.map(h => <li><HotelCard hotel={h}/></li>)}
-      </ul>
-      )}
-    </div>
+  return  (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/hotels" element={<HotelsList />} />
+        <Route path="/hotels/:id" element={<Hotel />} />
+        <Route
+          path="*"
+          element={<Navigate to="/hotels" replace={true} />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
