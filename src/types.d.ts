@@ -1,3 +1,4 @@
+//all types besides component prop types are here
 type Room = {
 	roomType?: string,
 	amount?: number
@@ -8,18 +9,11 @@ type Hotel = {
 	location?: string,
 	rating?: number,
 	imageUrl?: string,
-	datesOfTravel?: string,
+	datesOfTravel?: Array<string>,
 	boardBasis?: string,
 	rooms?: Array<Room>,
 }
-
-// type LoaderResponse = {
-// 	status: 'success' | 'error'
-// }
-
-// type LoaderResponseHotel = LoaderResponse & { data?: Hotel }
-
-// type LoaderResponseHotels = LoaderResponse & { data?: Array<Hotel> }
+// ?i have a feeling that this needs to be fixed but i don't know how yet(
 type DataError = string
 type DataHotels = Array<Hotel>
 type DataHotel = Hotel
