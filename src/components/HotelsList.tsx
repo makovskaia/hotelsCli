@@ -1,23 +1,13 @@
 // @ts-nocheck
 import React, { useEffect, useState } from 'react';
 import { HotelCard } from './HotelCard'
+import { Loader } from '../Loader'
 
-async function loadHotels(callback: (res: LoaderResponseHotels)=> void){
-  try{
-    const res = await fetch('http://localhost:5248/hotels')
-    const hotels: Array<Hotel> = await res.json()
-    callback({status: 'success', data: hotels})
-  }catch(e){
-    callback({status: 'error'})
-  }
-
-}
-  
 export const HotelsList: React.FC = () => {
   const [hotels, setHotels] = useState([])
   const [status, setStatus] = useState('loading')
   useEffect(()=>{
-    loadHotels((res: LoaderResponseHotels) => {
+    Loader.allHotels((res: LoaderResponseHotels) => {
       setStatus(res.status)
       console.log(res)
       if(res.status === 'success') setHotels(res.data)

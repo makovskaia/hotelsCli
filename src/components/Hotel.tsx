@@ -2,16 +2,7 @@
 import React, {useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { HotelCard } from './HotelCard'
-
-async function loadHotel(id: string, callback: (h: Hotel) => void){
-  try{
-    const res = await fetch(`http://localhost:5248/hotels/${id}`)
-    const hotel: Hotel = await res.json()
-    callback(hotel)
-  }catch(e){
-    console.log(e)
-  }
-}
+import { Loader } from '../Loader'
 
 interface Params {
   id: string;
@@ -21,15 +12,21 @@ export const Hotel: React.FC = () => {
   const { id } = useParams<Params>()
   console.log(id)
   const [hotel, setHotel] = useState()
+  const [status, setStatus] = useState('loading')
   console.log(hotel)
   useEffect(()=>{
-    loadHotel(id, (h) => {
-      console.log(h)
-      setHotel(h)
+    Loader.hotelById(id, (res: any) => {
+      setStatus(res.status)
+      if(res.status === 'success'){
+        setHotel(res.data)
+        console.log(res)
+      }else{
+        console.log(res.data)
+      }
     })
   },[])
 
-  return hotel && (
+  return status === 'loading' ? <p>loading...</p> : status === 'error' ? <p>error</p> : (
     <HotelCard hotel={hotel}/>
   )
 }
