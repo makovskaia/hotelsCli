@@ -1,17 +1,17 @@
-// @ts-nocheck
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import { RoomsCard } from './RoomsCard'
-type HotelProps = Hotel | any
+type HotelProps = {
+	hotel?: Hotel
+}
 
-export const HotelCard: React.FC = (props: HotelProps) => {
+export const HotelCard: React.FC<HotelProps> = (props: HotelProps) => {
 	return (
-		<Link to={`/hotels/${props.hotel.id}`} style={{textDecoration: 'none'}}>
-			<Container style={{padding: '1em'}}>
+		<Container style={{padding: '1em'}}>
+			{props.hotel ? (
 				<Row bordered={true}>
 					<Col xs={6} md={4}>
 			          <Image
@@ -26,10 +26,10 @@ export const HotelCard: React.FC = (props: HotelProps) => {
 						<h5>{props.hotel.boardBasis}</h5>
 			        </Col>
 			        <Col xs={6} md={4}>
-			          <RoomsCard rooms={props.hotel.rooms} />
+			          <RoomsCard rooms={props.hotel.rooms || []} />
 			        </Col>
 				</Row>
-			</Container>
-		</Link>
+			) : <div>no data</div>}
+		</Container>
 	)
 }
