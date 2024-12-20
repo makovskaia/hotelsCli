@@ -27,7 +27,7 @@ export const HotelsList: React.FC = () => {
     status === 'error' ? <div>error</div> :(
     <div className="HotelsList">
       <ul>
-        {hotels.map((h:any) => <li><HotelCard hotel={h}/></li>)}
+        {hotels.map((h:any) => <li style={{listStyle:'none'}}><HotelCard hotel={h}/></li>)}
       </ul>
     </div>
   )
