@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { HotelCard } from './HotelCard'
 import { Loader } from '../Loader'
+import { LoaderComponent } from './LoaderComponent'
 
 export const HotelsList: React.FC = () => {
   const [hotels, setHotels] = useState([])
@@ -13,7 +14,7 @@ export const HotelsList: React.FC = () => {
       if(res.status === 'success') setHotels(res.data)
     })
   },[])
-  return status === 'loading' ? <div>loading...</div> :
+  return status === 'loading' ? <LoaderComponent /> :
     status === 'error' ? <div>error</div> :(
     <div className="HotelsList">
       <ul>

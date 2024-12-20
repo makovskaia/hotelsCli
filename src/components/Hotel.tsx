@@ -3,6 +3,7 @@ import React, {useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { HotelCard } from './HotelCard'
 import { Loader } from '../Loader'
+import { LoaderComponent } from './LoaderComponent'
 
 interface Params {
   id: string;
@@ -26,7 +27,7 @@ export const Hotel: React.FC = () => {
     })
   },[])
 
-  return status === 'loading' ? <p>loading...</p> : status === 'error' ? <p>error</p> : (
+  return status === 'loading' ? <LoaderComponent /> : status === 'error' ? <p>error</p> : (
     <HotelCard hotel={hotel}/>
   )
 }
