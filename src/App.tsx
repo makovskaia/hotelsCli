@@ -1,5 +1,5 @@
 import React from 'react';
-import { HotelsList } from './components/HotelsList'
+import { HotelsPage } from './components/HotelsPage'
 import { HotelPage } from './components/HotelPage'
 import logo from './logo.svg';
 import './App.css';
@@ -11,7 +11,7 @@ const App: React.FC = () => {
   return  (
     <BrowserRouter>
       <Routes>
-        <Route path="/hotels" element={<HotelsList />} />
+        <Route path="/hotels" element={<HotelsPage />} />
         <Route path="/hotels/:id" element={<HotelPage />} />
         <Route
           path="*"

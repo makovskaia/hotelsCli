@@ -19,10 +19,11 @@ type DataHotels = Array<Hotel>
 type DataHotel = Hotel
 type LoaderResponseData = DataError | DataHotel | DataHotels
 type LoaderResponse = {
-	status: 'success' | 'error',
+	status: LoadingStatus,
 	data: LoaderResponseData
 }
 type LoadParams = {
 	url: string,
 	callback: (response: LoaderResponse)=>void
 }
+type LoadingStatus = 'success' | 'error' | 'loading'

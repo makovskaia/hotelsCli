@@ -2,8 +2,7 @@ import React, {useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { HotelCard } from './HotelCard'
 import { Loader } from '../Loader'
-import { LoaderComponent } from './LoaderComponent'
-import { ErrorComponent } from './ErrorComponent'
+import { ConditionalRender } from './ConditionalRender'
 
 type Params = {
   id: string;
@@ -13,7 +12,7 @@ type Params = {
 export const HotelPage: React.FC = () => {
   const { id } = useParams<Params>()
   const [hotel, setHotel] = useState()
-  const [status, setStatus] = useState('loading')
+  const [status, setStatus]: [LoadingStatus, any] = useState('loading')
   const [error, setError] = useState('')
   //preload hotel and set hotel and status state
   useEffect(()=>{
@@ -32,9 +31,5 @@ export const HotelPage: React.FC = () => {
       })
     }
   },[])
-  // conditional rendering depending on state. 
-  // !code dublication mentioned above!
-  return status === 'loading' ? <LoaderComponent /> : status === 'error' ? <ErrorComponent error={error} /> : (
-    <HotelCard hotel={hotel}/>
-  )
+  return <ConditionalRender error={error} status={status}><HotelCard hotel={hotel}/></ConditionalRender>
 }
